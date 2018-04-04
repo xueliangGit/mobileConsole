@@ -3,11 +3,13 @@
   // 创建 dom
   let _i = 1
   let isruning = false
-  let keyword = ['textContent', 'attributes', 'childNodes', 'children', 'firstChild', 'firstElementChild', 'lastChild', 'lastElementChild', 'nextSibling', 'ownerDocument', 'parentElement', 'parentNode', 'previousElementSibling', 'previousSibling', 'outerHTML', 'innerHTML', 'innerText', 'outerText', 'enabledPlugin', 'description', 'Plugin', 'plugins', 'type', 'suffixes', 'MimeTypeArray', 'PluginArray', 'MimeType ', 'CSSRuleList', 'navigator', 'screen', 'performance', 'parent', 'self', 'document', 'customElements', 'crypto', 'createImageBitmap', 'clientInformation', 'location', 'locationbar', 'menubar', 'postMessage', 'scrollbars', 'speechSynthesis', 'window', 'frames', 'style', 'constructor', 'nextElementSibling', 'MediaList', 'ownerNode', 'rules', 'parentStyleSheet'];
-  function creatDom(el, cN = '', id = '') {
+  let keyword = ['textContent', 'attributes', 'childNodes', 'children', 'firstChild', 'firstElementChild', 'lastChild', 'lastElementChild', 'nextSibling', 'ownerDocument', 'parentElement', 'parentNode', 'previousElementSibling', 'previousSibling', 'outerHTML', 'innerHTML', 'innerText', 'outerText', 'enabledPlugin', 'description', 'Plugin', 'plugins', 'type', 'suffixes', 'MimeTypeArray', 'PluginArray', 'MimeType ', 'CSSRuleList', 'navigator', 'screen', 'performance', 'parent', 'self', 'document', 'customElements', 'crypto', 'createImageBitmap', 'clientInformation', 'location', 'locationbar', 'menubar', 'postMessage', 'scrollbars', 'speechSynthesis', 'window', 'frames', 'style', 'constructor', 'nextElementSibling', 'MediaList', 'ownerNode', 'rules', 'parentStyleSheet','shadowRoot'];
+  function creatDom(el, cN = '', id = '',html='',fn=(els)=>{}) {
     let els = document.createElement(el)
     els.className = cN
     els.id = id
+    els.innerHTML = html
+    fn(els);
     return els
   }
   class Creatdom {
@@ -25,11 +27,14 @@
         this.d.innerHTML='';
         _i=1
       }
+      let loading = creatDom('span','sloth-debug-loading','','命令执行中...');
+      loading.style.display='none';
       span.onclick = function () {
         if (input.value == ''||isruning) return;
+        loading.style.display='block';
         isruning=true
         try {
-          let t = eval(input.value);
+          let t = window.eval(input.value);
           input.value=''
           if (t) {
             handleErr.log(t);
@@ -37,9 +42,11 @@
           isruning = false
         } catch (e) {
           isruning = false
+          loading.style.display='none';
           throw new Error(e);
         }
         isruning = false
+        loading.style.display='none';
       }
       inputdiv.appendChild(input)
       inputdiv.appendChild(span)
@@ -52,6 +59,7 @@
       content.appendChild(this.d);
       content.appendChild(close);
       content.appendChild(clear);
+      content.appendChild(loading);
       content.appendChild(inputdiv);
       document.body.appendChild(content);
       this.deeps = 20
@@ -112,18 +120,19 @@
     creatInlineBlock(obj) {
       return `<span class="sloth-debug-table-cell">${obj}</span>　`;
     }
+    creatLineDom(){
+      let line = creatDom('div','sloth-debug-line','','')
+      return 
+    }
     creatLine(...arg) {
       let str = `
-      <div class='sloth-debug-line' style="height:auto" ondblclick ='this.style.height=this.style.height=="auto"?"28px":"auto"'>
       <em class='sloth-table-index'>${_i}</em>   ${arg.join(' ')}
-      </div>
     `;
       _i++
-      return str
+      return creatDom('div','sloth-debug-line','',str,(ele)=>{ele.style.height='24px';ele.ondblclick=function(){this.style.height=this.style.height=="auto"?"24px":"auto"}})
     }
     creatDom(...arg) {
-      let tline = this.creatLine(arg);
-      this.d.innerHTML += tline;
+      this.d.appendChild(this.creatLine(arg));
       this.d.scrollTop = this.d.scrollHeight - this.d.offsetHeight
       //return {html:this.d.outerHTML,el:this.d}
     }
@@ -205,6 +214,7 @@
   border:1px #333 solid;
   margin:0 0 0 13px;
   background:#fff;
+  padding:3px;
 }
 .sloth-debug-zhan{
   display:block;
@@ -213,33 +223,48 @@
   right:0;
   width:75px;
   text-align:center;
-  height:30px;
-  line-height:30px;
+  height:22px;
+  line-height:22px;
   background:rgba(0,0,0,.5);
   color:#fff;
   cursor:pointer;
-  font-size:14px;
+  font-size:12px;
 }
 .clear-code{
   display:block;
   position:absolute;
   top:0;
   right:75px;
-  width:75px;
+  width:45px;
   text-align:center;
-  height:30px;
-  line-height:30px;
+  height:22px;
+  line-height:22px;
   background:rgba(0,0,0,.5);
   color:#fff;
   cursor:pointer;
-  font-size:14px;
+  font-size:12px;
+  margin-right:5px;
+}
+.sloth-debug-loading{
+  position:absolute;
+  bottom:70px;left:0;right:0;margin:0 auto;
+  text-align:center;
+  background:rgba(255,255,255,.6)
 }
 `
   let style = creatDom('style');
   style.innerHTML = styles;
   document.head.appendChild(style);
   class HandleErr extends Con {
-
+    ignore(...arg){
+      for(let i in arg){
+        if(typeof arg[i] ==='object'){
+          keyword=keyword.concat(arg[i])
+        }else{
+          keyword.push(arg[i])
+        }
+      }
+    }
   }
   let handleErr = e = window.handleErr=window.e=new HandleErr()
   let _console = {
@@ -249,6 +274,7 @@
   console.log = function(...arg){
     handleErr.log(...arg)
   }
+  handleErr.log(decodeURIComponent('%E8%BF%99%E6%98%AF%E4%B8%80%E4%B8%AA%E7%A7%BB%E5%8A%A8%E7%AB%AF%E7%AE%80%E6%98%93%E7%9A%84%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7%EF%BC%8C%E4%B8%BA%E4%BA%86%E6%96%B9%E4%BE%BF%E5%BC%80%E5%8F%91%E8%80%85%E5%9C%A8%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%89%93%E5%8D%B0%E6%95%B0%E6%8D%AE%E7%94%A8%EF%BC%8C---%E6%A0%91%E6%87%92%40%E6%97%A0%E5%A3%B0%E7%BC%96%E5%86%99'))
   console.warn = handleErr.warn
   window.onerror = function (...arg) {
     handleErr.error(arguments[4].stack)

@@ -2,6 +2,6 @@ function a (){
   alert(c)
 }
 function b(){
-  alert(由@无声 编辑)
+  alert(bc)
 }
 console.log(b())
