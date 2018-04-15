@@ -35,10 +35,11 @@
         isruning=true
         try {
           let t = window.eval(input.value);
-          input.value=''
           if (t) {
+            handleErr.log(input.value);
             handleErr.log(t);
           }
+          input.value=''
           isruning = false
         } catch (e) {
           isruning = false

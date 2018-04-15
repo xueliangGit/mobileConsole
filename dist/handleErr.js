@@ -50,10 +50,11 @@ var __extends = (this && this.__extends) || (function () {
                 isruning = true;
                 try {
                     var t = window.eval(input.value);
-                    input.value = '';
                     if (t) {
+                        handleErr.log(input.value);
                         handleErr.log(t);
                     }
+                    input.value = '';
                     isruning = false;
                 }
                 catch (e) {
