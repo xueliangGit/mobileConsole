@@ -49,9 +49,9 @@ var __extends = (this && this.__extends) || (function () {
                 loading.style.display = 'block';
                 isruning = true;
                 try {
+                    handleErr.print(input.value + ":");
                     var t = window.eval(input.value);
                     if (t) {
-                        handleErr.log(input.value);
                         handleErr.log(t);
                     }
                     input.value = '';

@@ -34,9 +34,9 @@
         loading.style.display='block';
         isruning=true
         try {
+          handleErr.print(input.value + ":");
           let t = window.eval(input.value);
           if (t) {
-            handleErr.log(input.value);
             handleErr.log(t);
           }
           input.value=''
