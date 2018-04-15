@@ -36,9 +36,7 @@
         try {
           handleErr.print(input.value + ":");
           let t = window.eval(input.value);
-          if (t) {
-            handleErr.log(t);
-          }
+          handleErr.log(t);
           input.value=''
           isruning = false
         } catch (e) {

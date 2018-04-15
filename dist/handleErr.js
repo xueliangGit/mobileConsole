@@ -51,9 +51,7 @@ var __extends = (this && this.__extends) || (function () {
                 try {
                     handleErr.print(input.value + ":");
                     var t = window.eval(input.value);
-                    if (t) {
-                        handleErr.log(t);
-                    }
+                    handleErr.log(t);
                     input.value = '';
                     isruning = false;
                 }
