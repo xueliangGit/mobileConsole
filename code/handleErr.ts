@@ -43,7 +43,8 @@
         } catch (e) {
           isruning = false
           loading.style.display='none';
-          throw new Error(e);
+          handleErr.error(e.message)
+          // throw new Error(e);
         }
         isruning = false
         loading.style.display='none';
@@ -164,6 +165,9 @@
     }
   }
   let styles = `
+  body{
+    padding-bottom: 60px!important;
+  }
 .sloth-debug-con{
   position:fixed;
   bottom:0;left:0;right:0;
@@ -171,6 +175,7 @@
   max-height:50%;
   font-family: 'Comic Sans MS','Tahoma';
   overflow: hidden;
+  z-index:9999;
 }
 .sloth-debug-table{
   font-family: 'Comic Sans MS','Tahoma';
@@ -178,14 +183,14 @@
   height:100%;
   padding-bottom: 60px;
   box-sizing: border-box;
-  background:rgba(0,0,0,.2)
+  background:rgba(0,0,0,.5)
 }
 .sloth-debug-table-cell{
   display:inline-block;
   vertical-align: top;
 }
 .sloth-debug-line{
-  background:rgba(238,238,238,.8);
+  background:rgba(238,238,238,.9);
   padding:5px;
   margin-bottom:5px;
   overflow-x: auto;
@@ -277,6 +282,10 @@
   handleErr.log(decodeURIComponent('%E8%BF%99%E6%98%AF%E4%B8%80%E4%B8%AA%E7%A7%BB%E5%8A%A8%E7%AB%AF%E7%AE%80%E6%98%93%E7%9A%84%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7%EF%BC%8C%E4%B8%BA%E4%BA%86%E6%96%B9%E4%BE%BF%E5%BC%80%E5%8F%91%E8%80%85%E5%9C%A8%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%89%93%E5%8D%B0%E6%95%B0%E6%8D%AE%E7%94%A8%EF%BC%8C---%E6%A0%91%E6%87%92%40%E6%97%A0%E5%A3%B0%E7%BC%96%E5%86%99'))
   console.warn = handleErr.warn
   window.onerror = function (...arg) {
-    handleErr.error(arguments[4].stack)
+    if(arg[4]){
+      handleErr.error(arg[4].stack)
+    }else{
+      handleErr.error(arg[0])
+    }
   }
 })()

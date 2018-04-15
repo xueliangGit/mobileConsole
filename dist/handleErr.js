@@ -59,7 +59,8 @@ var __extends = (this && this.__extends) || (function () {
                 catch (e) {
                     isruning = false;
                     loading.style.display = 'none';
-                    throw new Error(e);
+                    handleErr.error(e.message);
+                    // throw new Error(e);
                 }
                 isruning = false;
                 loading.style.display = 'none';
@@ -211,7 +212,7 @@ var __extends = (this && this.__extends) || (function () {
         };
         return Con;
     }(Creatdom));
-    var styles = "\n.sloth-debug-con{\n  position:fixed;\n  bottom:0;left:0;right:0;\n  height:500px;\n  max-height:50%;\n  font-family: 'Comic Sans MS','Tahoma';\n  overflow: hidden;\n}\n.sloth-debug-table{\n  font-family: 'Comic Sans MS','Tahoma';\n  overflow: auto;\n  height:100%;\n  padding-bottom: 60px;\n  box-sizing: border-box;\n  background:rgba(0,0,0,.2)\n}\n.sloth-debug-table-cell{\n  display:inline-block;\n  vertical-align: top;\n}\n.sloth-debug-line{\n  background:rgba(238,238,238,.8);\n  padding:5px;\n  margin-bottom:5px;\n  overflow-x: auto;\n  font-size: 12px;\n  line-height: 14px;\n}\n.sloth-table-index{\n  color:#999;\n  font-style:normal;\n}\n.sloth-debug-input{\n  position:absolute;\n  bottom:0;\n  left:0;\n  right:0;\n  padding:10px;\n}\n.sloth-debug-input input{\n  width:80%;\n  border:1px #333 solid;\n  padding:3px;\n  height:26px;\n  line-height:26px;\n}\n.sloth-debug-input span{\n  border:1px #333 solid;\n  margin:0 0 0 13px;\n  background:#fff;\n  padding:3px;\n}\n.sloth-debug-zhan{\n  display:block;\n  position:absolute;\n  top:0;\n  right:0;\n  width:75px;\n  text-align:center;\n  height:22px;\n  line-height:22px;\n  background:rgba(0,0,0,.5);\n  color:#fff;\n  cursor:pointer;\n  font-size:12px;\n}\n.clear-code{\n  display:block;\n  position:absolute;\n  top:0;\n  right:75px;\n  width:45px;\n  text-align:center;\n  height:22px;\n  line-height:22px;\n  background:rgba(0,0,0,.5);\n  color:#fff;\n  cursor:pointer;\n  font-size:12px;\n  margin-right:5px;\n}\n.sloth-debug-loading{\n  position:absolute;\n  bottom:70px;left:0;right:0;margin:0 auto;\n  text-align:center;\n  background:rgba(255,255,255,.6)\n}\n";
+    var styles = "\n  body{\n    padding-bottom: 60px!important;\n  }\n.sloth-debug-con{\n  position:fixed;\n  bottom:0;left:0;right:0;\n  height:500px;\n  max-height:50%;\n  font-family: 'Comic Sans MS','Tahoma';\n  overflow: hidden;\n  z-index:9999;\n}\n.sloth-debug-table{\n  font-family: 'Comic Sans MS','Tahoma';\n  overflow: auto;\n  height:100%;\n  padding-bottom: 60px;\n  box-sizing: border-box;\n  background:rgba(0,0,0,.5)\n}\n.sloth-debug-table-cell{\n  display:inline-block;\n  vertical-align: top;\n}\n.sloth-debug-line{\n  background:rgba(238,238,238,.9);\n  padding:5px;\n  margin-bottom:5px;\n  overflow-x: auto;\n  font-size: 12px;\n  line-height: 14px;\n}\n.sloth-table-index{\n  color:#999;\n  font-style:normal;\n}\n.sloth-debug-input{\n  position:absolute;\n  bottom:0;\n  left:0;\n  right:0;\n  padding:10px;\n}\n.sloth-debug-input input{\n  width:80%;\n  border:1px #333 solid;\n  padding:3px;\n  height:26px;\n  line-height:26px;\n}\n.sloth-debug-input span{\n  border:1px #333 solid;\n  margin:0 0 0 13px;\n  background:#fff;\n  padding:3px;\n}\n.sloth-debug-zhan{\n  display:block;\n  position:absolute;\n  top:0;\n  right:0;\n  width:75px;\n  text-align:center;\n  height:22px;\n  line-height:22px;\n  background:rgba(0,0,0,.5);\n  color:#fff;\n  cursor:pointer;\n  font-size:12px;\n}\n.clear-code{\n  display:block;\n  position:absolute;\n  top:0;\n  right:75px;\n  width:45px;\n  text-align:center;\n  height:22px;\n  line-height:22px;\n  background:rgba(0,0,0,.5);\n  color:#fff;\n  cursor:pointer;\n  font-size:12px;\n  margin-right:5px;\n}\n.sloth-debug-loading{\n  position:absolute;\n  bottom:70px;left:0;right:0;margin:0 auto;\n  text-align:center;\n  background:rgba(255,255,255,.6)\n}\n";
     var style = creatDom('style');
     style.innerHTML = styles;
     document.head.appendChild(style);
@@ -255,6 +256,11 @@ var __extends = (this && this.__extends) || (function () {
         for (var _a = 0; _a < arguments.length; _a++) {
             arg[_a] = arguments[_a];
         }
-        handleErr.error(arguments[4].stack);
+        if (arg[4]) {
+            handleErr.error(arg[4].stack);
+        }
+        else {
+            handleErr.error(arg[0]);
+        }
     };
 })();
