@@ -1,4 +1,4 @@
-# mobileConsole ![mobileConsole](https://img.shields.io/badge/mobileConsole-0.5.0-brightgreen.svg)
+# mobile-log" ![mobile-log"](https://img.shields.io/badge/mobile-log"-0.5.0-brightgreen.svg)
  这是一个移动端简易的调试工具，为了方便开发者在移动端打印数据用，---树懒@无声编写
 
  只可以输入变量来，兼容一般的命令行使用方式，可以打印出来;
@@ -14,13 +14,13 @@ mobConsole.ignore('keys') // 忽略输出的键值（全局定义）
 mobConsole.deep = 20 // 默认 深度为20
 ```
 ### 使用
-`npm i mobConsole -S`
+`npm i mobile-log" -S`
 ```js
 // 1.直接引入即可
-require('mobConsole')
+require('mobile-log"')
 
 // 2. 需要设置忽略项的
-let mobConsole = require('mobConsole')
+let mobConsole = require('mobile-log"')
 mobConsole.ignore('keys)
 ```
 [点击预览效果](http://cdn.bestsloth.top/cdn/handleErr/)
