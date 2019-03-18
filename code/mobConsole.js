@@ -1,4 +1,4 @@
-(function () {
+export default (function () {
   // 创建 dom
   let _i = 1
   let isruning = false
@@ -305,7 +305,7 @@
   let style = creatDom('style')
   style.innerHTML = styles
   document.head.appendChild(style)
-  class HandleErr extends Con {
+  class MobConsole extends Con {
     ignore (...arg) {
       for (let i in arg) {
         if (typeof arg[i] === 'object') {
@@ -316,21 +316,22 @@
       }
     }
   }
-  let handleErr = window.handleErr = window.e = new HandleErr()
+  let mobConsole = window.mobConsole = window.e = new MobConsole()
   // let _console = {
   //   log: console.log,
   //   warn: console.warn
   // }
   console.log = function (...arg) {
-    handleErr.log(...arg)
+    mobConsole.log(...arg)
   }
-  handleErr.log(decodeURIComponent('%E8%BF%99%E6%98%AF%E4%B8%80%E4%B8%AA%E7%A7%BB%E5%8A%A8%E7%AB%AF%E7%AE%80%E6%98%93%E7%9A%84%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7%EF%BC%8C%E4%B8%BA%E4%BA%86%E6%96%B9%E4%BE%BF%E5%BC%80%E5%8F%91%E8%80%85%E5%9C%A8%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%89%93%E5%8D%B0%E6%95%B0%E6%8D%AE%E7%94%A8%EF%BC%8C---%E6%A0%91%E6%87%92%40%E6%97%A0%E5%A3%B0%E7%BC%96%E5%86%99'))
-  console.warn = handleErr.warn
+  mobConsole.log(decodeURIComponent('%E8%BF%99%E6%98%AF%E4%B8%80%E4%B8%AA%E7%A7%BB%E5%8A%A8%E7%AB%AF%E7%AE%80%E6%98%93%E7%9A%84%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7%EF%BC%8C%E4%B8%BA%E4%BA%86%E6%96%B9%E4%BE%BF%E5%BC%80%E5%8F%91%E8%80%85%E5%9C%A8%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%89%93%E5%8D%B0%E6%95%B0%E6%8D%AE%E7%94%A8%EF%BC%8C---%E6%A0%91%E6%87%92%40%E6%97%A0%E5%A3%B0%E7%BC%96%E5%86%99'))
+  console.warn = mobConsole.warn
   window.onerror = function (...arg) {
     if (arg[4]) {
-      handleErr.error(arg[4].stack)
+      mobConsole.error(arg[4].stack)
     } else {
-      handleErr.error(arg[0])
+      mobConsole.error(arg[0])
     }
   }
+  return mobConsole
 })()
