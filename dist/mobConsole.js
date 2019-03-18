@@ -1,10 +1,3 @@
-'use strict'
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-})
-exports.default = void 0
-
 function _instanceof (left, right) { if (right != null && typeof Symbol !== 'undefined' && right[Symbol.hasInstance]) { return right[Symbol.hasInstance](left) } else { return left instanceof right } }
 
 function _possibleConstructorReturn (self, call) { if (call && (_typeof(call) === 'object' || typeof call === 'function')) { return call } return _assertThisInitialized(self) }
@@ -25,7 +18,7 @@ function _defineProperties (target, props) { for (var i = 0; i < props.length; i
 
 function _createClass (Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor }
 
-var _default = (function () {
+(function () {
   // 创建 dom
   var _i = 1
   var isruning = false
@@ -48,6 +41,8 @@ var _default = (function () {
   var Creatdom =
   /* #__PURE__ */
   (function () {
+    'use strict';
+
     function Creatdom () {
       var _this = this
 
@@ -67,7 +62,7 @@ var _default = (function () {
       clear.onclick = function () {
         _this.d.innerHTML = ''
         _i = 1
-      }
+      };
 
       var loading = creatDom('span', 'sloth-debug-loading', '', '命令执行中...')
       loading.style.display = 'none'
@@ -95,7 +90,7 @@ var _default = (function () {
 
         isruning = false
         loading.style.display = 'none'
-      }
+      };
 
       inputdiv.appendChild(input)
       inputdiv.appendChild(span)
@@ -104,14 +99,14 @@ var _default = (function () {
 
       close.onclick = function () {
         content.style.height = content.style.height !== '72px' ? '72px' : '50vh'
-      } // 添加全屏展示 半屏展示
+      }; // 添加全屏展示 半屏展示
 
       var screenAll = creatDom('span', 'screen-all')
       screenAll.innerText = '全屏/半屏'
 
       screenAll.onclick = function () {
         content.style.height = content.style.height !== '50vh' ? '50vh' : '99vh'
-      }
+      };
 
       var content = creatDom('div', 'sloth-debug-con')
       content.appendChild(this.d)
@@ -123,7 +118,7 @@ var _default = (function () {
 
       this.d.onscroll = function (e) {
         _this.isScorll()
-      }
+      };
 
       document.body.appendChild(content)
       this.deeps = 20
@@ -159,19 +154,19 @@ var _default = (function () {
         switch (type) {
           case 'string':
             str = content
-            break
+            break;
 
           case 'number':
             str = content
-            break
+            break;
 
           case 'boolean':
             str = content
-            break
+            break;
 
           case 'function':
             str = content.toString()
-            break
+            break;
 
           case 'object':
             if (Array.isArray(content)) {
@@ -240,7 +235,7 @@ var _default = (function () {
           ele.ondblclick = function () {
             this.style.height = this.style.height === 'auto' ? '24px' : 'auto'
             console.info('dblClick')
-          }
+          };
         })
       }
     }, {
@@ -264,6 +259,8 @@ var _default = (function () {
   var Con =
   /* #__PURE__ */
   (function (_Creatdom) {
+    'use strict';
+
     _inherits(Con, _Creatdom)
 
     function Con () {
@@ -328,6 +325,8 @@ var _default = (function () {
   var MobConsole =
   /* #__PURE__ */
   (function (_Con) {
+    'use strict';
+
     _inherits(MobConsole, _Con)
 
     function MobConsole () {
@@ -381,6 +380,4 @@ var _default = (function () {
   }
 
   return mobConsole
-}())
-
-exports.default = _default
+})()
